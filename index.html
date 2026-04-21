@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RentaLectura · Alquila libros del cole entre familias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --forest:    #1a4731;
+  --emerald:   #2d7a52;
+  --mint:      #4db87a;
+  --sage:      #e8f5ee;
+  --navy:      #0e2a47;
+  --sky:       #1966a8;
+  --azure:     #ddeef9;
+  --sand:      #fdf8f2;
+  --amber:     #f5a623;
+  --ink:       #111827;
+  --slate:     #4b5563;
+  --mist:      #9ca3af;
+  --white:     #ffffff;
+  --border:    rgba(0,0,0,.08);
+
+  --r-sm:  10px;
+  --r-md:  18px;
+  --r-lg:  28px;
+  --r-xl:  40px;
+  --r-pill:9999px;
+
+  --sh-card: 0 2px 20px rgba(0,0,0,.07);
+  --sh-lift: 0 12px 48px rgba(0,0,0,.14);
+
+  --font-display: 'Lora', Georgia, serif;
+  --font-body:    'Outfit', system-ui, sans-serif;
+
+  --max: 1160px;
+}
+
+/* ═══════════════════════════════════════════
+   RESET + BASE
+═══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:var(--font-body);
+  background:var(--white);
+  color:var(--ink);
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button,input,select,textarea{font-family:inherit;}
+
+/* ═══════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════ */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.75rem;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.eyebrow.green{color:var(--emerald);}
+.eyebrow.blue {color:var(--sky);}
+.eyebrow .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:currentColor;flex-shrink:0;
+}
+
+h2.headline{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,4vw,2.9rem);
+  font-weight:700;line-height:1.2;
+  letter-spacing:-.02em;color:var(--navy);
+}
+h2.headline em{font-style:italic;color:var(--emerald);}
+
+.subline{
+  color:var(--slate);font-size:1.05rem;
+  max-width:580px;margin-top:16px;
+}
+
+/* scroll reveal */
+.sr{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease;}
+.sr.in{opacity:1;transform:none;}
+.sr-d1{transition-delay:.1s;}
+.sr-d2{transition-delay:.2s;}
+.sr-d3{transition-delay:.3s;}
+.sr-d4{transition-delay:.4s;}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:0 24px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  transition:box-shadow .3s;
+}
+#nav.scrolled{box-shadow:0 4px 24px rgba(0,0,0,.08);}
+
+.nav-brand{
+  font-family:var(--font-display);
+  font-size:1.3rem;font-weight:700;
+  color:var(--forest);letter-spacing:-.02em;
+}
+.nav-brand b{color:var(--mint);}
+
+.nav-links{
+  display:flex;gap:32px;list-style:none;
+}
+.nav-links a{
+  font-size:.88rem;font-weight:500;color:var(--slate);
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--forest);}
+
+.nav-btn{
+  background:var(--forest);color:var(--white);
+  border:none;border-radius:var(--r-pill);
+  padding:9px 22px;font-size:.88rem;font-weight:600;
+  cursor:pointer;transition:background .2s,transform .15s;
+  white-space:nowrap;
+}
+.nav-btn:hover{background:var(--emerald);transform:translateY(-1px);}
+
+.nav-mob{display:none;background:none;border:none;cursor:pointer;padding:4px;}
+.nav-mob svg{display:block;}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero{
+  min-height:100svh;
+  padding:100px 24px 72px;
+  display:flex;align-items:center;
+  background:var(--sand);
+  position:relative;overflow:hidden;
+}
+
+/* organic blob bg */
+.hero-blob{
+  position:absolute;pointer-events:none;
+  border-radius:50%;filter:blur(72px);opacity:.45;
+}
+.blob1{width:520px;height:520px;background:radial-gradient(circle,#c9eedc,transparent);top:-120px;right:-80px;}
+.blob2{width:360px;height:360px;background:radial-gradient(circle,#ddeef9,transparent);bottom:-80px;left:-60px;}
+
+.hero-inner{
+  position:relative;z-index:1;
+  max-width:var(--max);margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:64px;align-items:center;
+}
+
+/* hero text */
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--sage);color:var(--emerald);
+  border-radius:var(--r-pill);
+  padding:5px 14px 5px 8px;
+  font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:24px;
+  animation:slideDown .5s ease both;
+}
+.hero-kicker .pill-icon{
+  background:var(--emerald);color:white;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
+}
+
+h1{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem,5vw,3.9rem);
+  font-weight:700;line-height:1.1;
+  letter-spacing:-.03em;color:var(--navy);
+  animation:slideDown .55s .08s ease both;
+}
+h1 em{
+  font-style:italic;color:var(--emerald);
+  display:inline-block;
+  position:relative;
+}
+h1 em::after{
+  content:'';
+  position:absolute;left:0;bottom:-4px;right:0;
+  height:3px;border-radius:2px;
+  background:linear-gradient(90deg,var(--mint),transparent);
+}
+
+.hero-sub{
+  margin-top:22px;font-size:1.1rem;color:var(--slate);
+  max-width:500px;line-height:1.75;
+  animation:slideDown .55s .16s ease both;
+}
+
+.hero-ctas{
+  display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;
+  animation:slideDown .55s .24s ease both;
+}
+
+.btn-primary{
+  background:var(--emerald);color:var(--white);
+  border:none;border-radius:var(--r-pill);
+  padding:15px 32px;font-size:1rem;font-weight:600;
+  cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+  text-decoration:none;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(45,122,82,.3);
+}
+.btn-primary:hover{
+  background:var(--forest);transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(45,122,82,.4);
+}
+.btn-primary svg{transition:transform .2s;}
+.btn-primary:hover svg{transform:translateX(4px);}
+
+.btn-ghost{
+  background:transparent;color:var(--navy);
+  border:2px solid var(--border);border-radius:var(--r-pill);
+  padding:13px 28px;font-size:1rem;font-weight:500;
+  cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+  text-decoration:none;
+  transition:border-color .2s,background .2s,transform .15s;
+}
+.btn-ghost:hover{border-color:var(--navy);background:rgba(0,0,0,.03);transform:translateY(-2px);}
+
+.hero-trust{
+  display:flex;align-items:center;gap:18px;
+  margin-top:32px;flex-wrap:wrap;
+  animation:slideDown .55s .32s ease both;
+}
+.trust-pill{
+  display:flex;align-items:center;gap:6px;
+  font-size:.82rem;color:var(--slate);font-weight:500;
+}
+.trust-pill .tick{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--sage);color:var(--emerald);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:700;flex-shrink:0;
+}
+
+/* hero visual – mock phone card */
+.hero-visual{
+  animation:slideLeft .7s .2s ease both;
+  display:flex;justify-content:center;align-items:center;
+  position:relative;
+}
+.phone-mock{
+  width:300px;
+  background:var(--white);
+  border-radius:28px;
+  box-shadow:var(--sh-lift);
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.phone-header{
+  background:linear-gradient(135deg,var(--forest) 0%,var(--emerald) 100%);
+  padding:20px;color:white;
+}
+.phone-header .ph-label{font-size:.7rem;opacity:.7;font-weight:500;text-transform:uppercase;letter-spacing:.08em;}
+.phone-header .ph-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-top:4px;}
+.phone-header .ph-school{font-size:.8rem;opacity:.8;margin-top:2px;}
+.phone-body{padding:14px;}
+.book-entry{
+  display:flex;align-items:center;gap:12px;
+  padding:12px;border-radius:var(--r-sm);
+  background:var(--sand);margin-bottom:8px;
+  border:1px solid var(--border);
+  transition:transform .2s;
+  cursor:pointer;
+}
+.book-entry:hover{transform:scale(1.02);}
+.book-entry:last-child{margin-bottom:0;}
+.be-spine{
+  width:36px;height:50px;border-radius:5px;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;
+}
+.sp1{background:linear-gradient(135deg,#ffd6c2,#ffb299);}
+.sp2{background:linear-gradient(135deg,#c2d9ff,#99bcff);}
+.sp3{background:linear-gradient(135deg,#c2f0d5,#99e0b8);}
+.sp4{background:linear-gradient(135deg,#fff0c2,#ffd699);}
+.be-info{flex:1;min-width:0;}
+.be-name{font-size:.82rem;font-weight:600;color:var(--ink);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.be-meta{font-size:.72rem;color:var(--mist);margin-top:2px;}
+.be-price{
+  font-family:var(--font-display);
+  font-size:.95rem;font-weight:700;color:var(--emerald);
+  flex-shrink:0;
+}
+.phone-footer{
+  background:var(--sage);padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.phone-footer span{font-size:.75rem;color:var(--emerald);font-weight:600;}
+.phone-footer .pf-btn{
+  background:var(--emerald);color:white;border:none;
+  border-radius:var(--r-pill);padding:6px 14px;
+  font-size:.72rem;font-weight:700;cursor:pointer;
+}
+
+/* floating accents */
+.float-tag{
+  position:absolute;background:var(--white);
+  border-radius:var(--r-md);
+  padding:10px 16px;box-shadow:var(--sh-lift);
+  font-size:.78rem;font-weight:600;color:var(--navy);
+  display:flex;align-items:center;gap:8px;
+  animation:float 4s ease-in-out infinite;
+  border:1px solid var(--border);
+}
+.ft1{top:-18px;right:-20px;animation-delay:0s;}
+.ft2{bottom:-14px;left:-24px;animation-delay:2s;}
+.ft-icon{font-size:1rem;}
+
+/* ═══════════════════════════════════════════
+   SOCIAL PROOF STRIP
+═══════════════════════════════════════════ */
+#strip{
+  background:var(--navy);
+  padding:20px 24px;
+}
+.strip-inner{
+  max-width:var(--max);margin:0 auto;
+  display:flex;align-items:center;justify-content:center;
+  gap:48px;flex-wrap:wrap;
+}
+.strip-stat{
+  display:flex;flex-direction:column;align-items:center;
+  color:white;
+}
+.strip-num{
+  font-family:var(--font-display);
+  font-size:1.8rem;font-weight:700;letter-spacing:-.03em;
+}
+.strip-num span{color:var(--mint);}
+.strip-label{font-size:.75rem;opacity:.55;font-weight:400;margin-top:1px;}
+.strip-div{width:1px;height:36px;background:rgba(255,255,255,.12);}
+
+/* ═══════════════════════════════════════════
+   CÓMO FUNCIONA
+═══════════════════════════════════════════ */
+#como{
+  padding:100px 24px;
+  background:var(--white);
+}
+.como-head{text-align:center;margin-bottom:72px;}
+.como-head .subline{margin:16px auto 0;}
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  position:relative;
+  max-width:860px;margin:0 auto;
+}
+/* connector line */
+.steps::before{
+  content:'';
+  position:absolute;
+  top:44px;left:calc(16.6% + 8px);right:calc(16.6% + 8px);
+  height:2px;
+  background:linear-gradient(90deg,var(--sage),var(--azure),var(--sage));
+  z-index:0;
+}
+.step{
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;padding:0 24px;
+  position:relative;z-index:1;
+}
+.step-bubble{
+  width:88px;height:88px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  border:3px solid var(--white);
+  box-shadow:0 0 0 1px var(--border), var(--sh-card);
+  position:relative;
+  transition:transform .3s;
+}
+.step-bubble:hover{transform:scale(1.08);}
+.step:nth-child(1) .step-bubble{background:var(--sage);}
+.step:nth-child(2) .step-bubble{background:var(--azure);}
+.step:nth-child(3) .step-bubble{background:#fef3e0;}
+.step-num{
+  font-family:var(--font-display);
+  font-size:.65rem;font-weight:700;letter-spacing:.05em;
+  color:var(--mist);text-transform:uppercase;margin-bottom:2px;
+}
+.step-emoji{font-size:1.8rem;line-height:1;}
+.step h3{
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:700;color:var(--navy);
+  margin-bottom:10px;
+}
+.step p{font-size:.9rem;color:var(--slate);line-height:1.65;}
+
+/* ═══════════════════════════════════════════
+   BENEFICIOS PADRES
+═══════════════════════════════════════════ */
+#padres{
+  padding:100px 24px;
+  background:var(--forest);
+  position:relative;overflow:hidden;
+}
+#padres::before{
+  content:'';position:absolute;
+  inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,.04)'/%3E%3C/svg%3E") repeat;
+}
+#padres .wrap{position:relative;z-index:1;}
+#padres .eyebrow{color:var(--mint);}
+#padres h2.headline{color:var(--white);}
+#padres h2.headline em{color:var(--mint);}
+#padres .subline{color:rgba(255,255,255,.6);}
+
+.benefits-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:56px;
+}
+.ben-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-lg);
+  padding:32px 28px;
+  transition:background .25s,transform .25s;
+}
+.ben-card:hover{background:rgba(255,255,255,.1);transform:translateY(-4px);}
+.ben-icon{
+  font-size:2rem;margin-bottom:18px;display:block;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.2));
+}
+.ben-card h3{
+  font-family:var(--font-display);
+  font-size:1.05rem;font-weight:700;color:var(--white);
+  margin-bottom:10px;
+}
+.ben-card p{font-size:.88rem;color:rgba(255,255,255,.58);line-height:1.7;}
+.ben-tag{
+  display:inline-block;
+  margin-top:14px;
+  background:rgba(77,184,122,.2);color:var(--mint);
+  border-radius:var(--r-pill);
+  padding:3px 12px;font-size:.72rem;font-weight:700;
+}
+
+/* big saving callout */
+.saving-callout{
+  margin-top:48px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--r-xl);
+  padding:36px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;
+}
+.sc-text h3{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:700;color:white;margin-bottom:6px;
+}
+.sc-text p{color:rgba(255,255,255,.55);font-size:.9rem;}
+.sc-number{
+  font-family:var(--font-display);
+  font-size:4rem;font-weight:700;color:var(--mint);
+  line-height:1;letter-spacing:-.04em;
+  white-space:nowrap;
+}
+.sc-number small{font-size:1.4rem;vertical-align:top;margin-top:10px;display:inline-block;}
+
+/* ═══════════════════════════════════════════
+   BENEFICIOS COLEGIOS
+═══════════════════════════════════════════ */
+#colegios{
+  padding:100px 24px;
+  background:var(--sand);
+}
+.colegios-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  margin-top:64px;
+}
+.colegios-checklist{list-style:none;}
+.colegios-checklist li{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:20px 0;border-bottom:1px solid var(--border);
+}
+.colegios-checklist li:first-child{padding-top:0;}
+.colegios-checklist li:last-child{border-bottom:none;}
+.cl-icon{
+  width:40px;height:40px;border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;margin-top:2px;
+}
+.cl-icon.g{background:var(--sage);}
+.cl-icon.b{background:var(--azure);}
+.cl-icon.a{background:#fef3e0;}
+.cl-icon.p{background:#f3e8ff;}
+.cl-text h4{font-weight:700;color:var(--navy);margin-bottom:4px;font-size:.97rem;}
+.cl-text p{font-size:.88rem;color:var(--slate);line-height:1.65;}
+
+/* dashboard preview */
+.dashboard-card{
+  background:var(--white);
+  border-radius:var(--r-lg);
+  box-shadow:var(--sh-lift);
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.dash-header{
+  background:var(--navy);padding:18px 22px;
+  display:flex;align-items:center;gap:10px;
+}
+.dash-header .dh-dots{display:flex;gap:5px;}
+.dash-header .dh-dots span{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(255,255,255,.2);
+}
+.dash-header .dh-title{
+  font-size:.8rem;color:rgba(255,255,255,.5);font-weight:500;margin-left:6px;
+}
+.dash-body{padding:20px;}
+.dash-metric-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;
+}
+.dash-metric{
+  background:var(--sand);border-radius:var(--r-sm);
+  padding:14px;border:1px solid var(--border);
+}
+.dm-label{font-size:.7rem;color:var(--mist);font-weight:500;text-transform:uppercase;letter-spacing:.07em;}
+.dm-val{
+  font-family:var(--font-display);
+  font-size:1.5rem;font-weight:700;color:var(--navy);
+  margin-top:4px;letter-spacing:-.02em;
+}
+.dm-val.green{color:var(--emerald);}
+.dash-list-title{
+  font-size:.75rem;color:var(--mist);font-weight:600;
+  text-transform:uppercase;letter-spacing:.09em;
+  margin:16px 0 10px;
+}
+.dash-book-row{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:var(--r-sm);
+  background:var(--sand);border:1px solid var(--border);
+  margin-bottom:7px;font-size:.8rem;
+}
+.dash-book-row:last-child{margin-bottom:0;}
+.dbr-name{flex:1;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dbr-badge{
+  border-radius:var(--r-pill);
+  padding:2px 9px;font-size:.68rem;font-weight:700;flex-shrink:0;
+}
+.dbr-badge.ok {background:var(--sage);color:var(--emerald);}
+.dbr-badge.wait{background:var(--azure);color:var(--sky);}
+
+/* ═══════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════ */
+#faq{
+  padding:100px 24px;
+  background:var(--white);
+}
+.faq-layout{
+  display:grid;grid-template-columns:1fr 2fr;
+  gap:80px;align-items:start;
+  margin-top:64px;
+}
+.faq-sticky{position:sticky;top:88px;}
+.faq-sticky h2{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--navy);margin-bottom:12px;}
+.faq-sticky p{color:var(--slate);font-size:.9rem;line-height:1.7;}
+.faq-sticky .contact-link{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:20px;color:var(--emerald);font-weight:600;font-size:.88rem;
+  transition:gap .2s;
+}
+.faq-sticky .contact-link:hover{gap:10px;}
+
+.faq-list{display:flex;flex-direction:column;gap:10px;}
+.faq-item{
+  border:1px solid var(--border);
+  border-radius:var(--r-md);overflow:hidden;
+  background:var(--white);
+}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:20px 22px;cursor:pointer;
+  font-weight:600;font-size:.95rem;color:var(--navy);
+  user-select:none;
+  transition:background .2s;
+}
+.faq-q:hover{background:var(--sand);}
+.faq-arrow{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--sage);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform .3s,background .2s;
+}
+.faq-arrow svg{display:block;}
+.faq-item.open .faq-arrow{transform:rotate(45deg);background:var(--emerald);}
+.faq-item.open .faq-arrow svg path{stroke:white;}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease,padding .3s;
+  font-size:.9rem;color:var(--slate);line-height:1.8;
+}
+.faq-item.open .faq-a{max-height:400px;padding:0 22px 22px;}
+
+/* ═══════════════════════════════════════════
+   LISTA DE ESPERA
+═══════════════════════════════════════════ */
+#waitlist{
+  padding:100px 24px;
+  background:linear-gradient(160deg,var(--navy) 0%,#0a3d2b 100%);
+  position:relative;overflow:hidden;
+}
+#waitlist::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(77,184,122,.12), transparent),
+    radial-gradient(ellipse 40% 40% at 80% 30%, rgba(25,102,168,.15), transparent);
+}
+#waitlist .wrap{position:relative;z-index:1;}
+
+.waitlist-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+#waitlist .eyebrow{color:var(--mint);}
+#waitlist h2.headline{color:white;}
+#waitlist h2.headline em{color:var(--mint);}
+#waitlist .subline{color:rgba(255,255,255,.55);}
+
+.trust-row{
+  display:flex;flex-wrap:wrap;gap:16px;margin-top:32px;
+}
+.tr-pill{
+  display:flex;align-items:center;gap:7px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-pill);
+  padding:7px 16px;
+  font-size:.78rem;color:rgba(255,255,255,.7);font-weight:500;
+}
+.tr-pill svg{flex-shrink:0;}
+
+/* form card */
+.form-card{
+  background:var(--white);
+  border-radius:var(--r-xl);
+  padding:40px;
+  box-shadow:0 24px 80px rgba(0,0,0,.3);
+}
+.form-tabs{
+  display:flex;gap:0;border:2px solid var(--border);
+  border-radius:var(--r-pill);margin-bottom:32px;
+  overflow:hidden;
+  background:var(--sand);
+}
+.tab-btn{
+  flex:1;padding:10px;border:none;cursor:pointer;
+  font-size:.85rem;font-weight:600;
+  background:transparent;color:var(--mist);
+  border-radius:var(--r-pill);
+  transition:background .25s,color .25s;
+}
+.tab-btn.active{background:var(--white);color:var(--navy);box-shadow:var(--sh-card);}
+
+.form-group{margin-bottom:18px;}
+.form-group label{
+  display:block;font-size:.82rem;font-weight:600;
+  color:var(--slate);margin-bottom:7px;
+}
+.form-group input,
+.form-group select{
+  width:100%;padding:13px 16px;
+  border:1.5px solid var(--border);border-radius:var(--r-md);
+  font-size:.95rem;color:var(--ink);
+  background:var(--sand);
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  appearance:none;
+}
+.form-group input:focus,
+.form-group select:focus{
+  border-color:var(--emerald);
+  box-shadow:0 0 0 3px rgba(45,122,82,.12);
+  background:white;
+}
+.form-group select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:36px;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-submit{
+  width:100%;background:var(--emerald);color:white;
+  border:none;border-radius:var(--r-pill);
+  padding:16px;font-size:1rem;font-weight:700;
+  cursor:pointer;margin-top:6px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(45,122,82,.3);
+}
+.form-submit:hover{background:var(--forest);transform:translateY(-2px);box-shadow:0 8px 32px rgba(45,122,82,.45);}
+.form-note{
+  text-align:center;font-size:.75rem;color:var(--mist);
+  margin-top:14px;line-height:1.5;
+}
+
+/* success state */
+.form-success{
+  display:none;text-align:center;padding:20px 0;
+}
+.success-icon{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--sage);display:flex;align-items:center;justify-content:center;
+  font-size:2rem;margin:0 auto 20px;
+}
+.form-success h3{
+  font-family:var(--font-display);
+  font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:8px;
+}
+.form-success p{font-size:.9rem;color:var(--slate);}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+#footer{
+  background:var(--ink);
+  padding:48px 24px;
+}
+.footer-inner{
+  max-width:var(--max);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:24px;
+}
+.footer-brand{
+  font-family:var(--font-display);
+  font-size:1.2rem;font-weight:700;color:white;letter-spacing:-.02em;
+}
+.footer-brand b{color:var(--mint);}
+.footer-links{
+  display:flex;gap:24px;list-style:none;flex-wrap:wrap;
+}
+.footer-links a{
+  font-size:.82rem;color:rgba(255,255,255,.4);
+  transition:color .2s;
+}
+.footer-links a:hover{color:rgba(255,255,255,.8);}
+.footer-copy{font-size:.78rem;color:rgba(255,255,255,.25);}
+
+/* ═══════════════════════════════════════════
+   KEYFRAMES
+═══════════════════════════════════════════ */
+@keyframes slideDown{
+  from{opacity:0;transform:translateY(-20px);}
+  to  {opacity:1;transform:translateY(0);}
+}
+@keyframes slideLeft{
+  from{opacity:0;transform:translateX(36px);}
+  to  {opacity:1;transform:translateX(0);}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%    {transform:translateY(-12px);}
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:980px){
+  .hero-inner{grid-template-columns:1fr;gap:48px;}
+  .hero-visual{order:-1;}
+  .phone-mock{width:280px;}
+  .steps{grid-template-columns:1fr;gap:40px;}
+  .steps::before{display:none;}
+  .benefits-grid{grid-template-columns:1fr;}
+  .colegios-layout{grid-template-columns:1fr;gap:48px;}
+  .faq-layout{grid-template-columns:1fr;gap:40px;}
+  .faq-sticky{position:static;}
+  .waitlist-layout{grid-template-columns:1fr;gap:48px;}
+  .form-row{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .nav-mob{display:block;}
+}
+@media(max-width:600px){
+  section,#como,#padres,#colegios,#faq,#waitlist{padding:72px 20px;}
+  #hero{padding:88px 20px 64px;}
+  .strip-inner{gap:24px;}
+  .strip-div{display:none;}
+  .saving-callout{flex-direction:column;text-align:center;}
+  .form-card{padding:28px 22px;}
+  .footer-inner{flex-direction:column;align-items:flex-start;gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-brand">Renta<b>Lectura</b></div>
+  <ul class="nav-links">
+    <li><a href="#como">Cómo funciona</a></li>
+    <li><a href="#padres">Para familias</a></li>
+    <li><a href="#colegios">Para colegios</a></li>
+    <li><a href="#faq">Preguntas</a></li>
+  </ul>
+  <a class="nav-btn" href="#waitlist">Únete gratis</a>
+  <button class="nav-mob" aria-label="Menú">
+    <svg width="22" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect y="0" width="22" height="2" rx="1" fill="#111827"/>
+      <rect y="8" width="22" height="2" rx="1" fill="#111827"/>
+      <rect y="16" width="22" height="2" rx="1" fill="#111827"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+
+  <div class="hero-inner wrap">
+    <div>
+      <div class="hero-kicker">
+        <div class="pill-icon">♻</div>
+        Economía circular escolar · Lanzamiento 2025
+      </div>
+      <h1>Ahorra en libros<br>del cole <em>reutilizando</em><br>entre familias</h1>
+      <p class="hero-sub">RentaLectura conecta a las familias de un mismo colegio para que alquilen sus libros escolares entre sí. Hasta un 70% de ahorro, sin complicaciones.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#waitlist">
+          Quiero apuntarme
+          <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="btn-ghost" href="#como">Ver cómo funciona</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-pill"><div class="tick">✓</div> Registro gratuito</div>
+        <div class="trust-pill"><div class="tick">✓</div> Pago seguro</div>
+        <div class="trust-pill"><div class="tick">✓</div> Sin permanencia</div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="phone-mock">
+        <div class="phone-header">
+          <div class="ph-label">RentaLectura</div>
+          <div class="ph-title">CEIP Rosalía de Castro</div>
+          <div class="ph-school">Madrid · 5.º y 6.º Primaria</div>
+        </div>
+        <div class="phone-body">
+          <div class="book-entry">
+            <div class="be-spine sp1">📐</div>
+            <div class="be-info">
+              <div class="be-name">Matemáticas 5.º SM</div>
+              <div class="be-meta">Muy buen estado · 1,2 km</div>
+            </div>
+            <div class="be-price">7 €</div>
+          </div>
+          <div class="book-entry">
+            <div class="be-spine sp2">🌍</div>
+            <div class="be-info">
+              <div class="be-name">Ciencias Sociales 5.º Anaya</div>
+              <div class="be-meta">Buen estado · 0,8 km</div>
+            </div>
+            <div class="be-price">8 €</div>
+          </div>
+          <div class="book-entry">
+            <div class="be-spine sp3">📖</div>
+            <div class="be-info">
+              <div class="be-name">Lengua Castellana 6.º Santillana</div>
+              <div class="be-meta">Como nuevo · 2,1 km</div>
+            </div>
+            <div class="be-price">9 €</div>
+          </div>
+          <div class="book-entry">
+            <div class="be-spine sp4">🔬</div>
+            <div class="be-info">
+              <div class="be-name">Naturales 6.º Vicens Vives</div>
+              <div class="be-meta">Muy buen estado · 0,5 km</div>
+            </div>
+            <div class="be-price">8 €</div>
+          </div>
+        </div>
+        <div class="phone-footer">
+          <span>4 libros disponibles cerca</span>
+          <button class="pf-btn">Ver todos</button>
+        </div>
+      </div>
+      <div class="float-tag ft1">
+        <span class="ft-icon">🎉</span>
+        <span>¡Ahorras <strong>€280</strong> este curso!</span>
+      </div>
+      <div class="float-tag ft2">
+        <span class="ft-icon">⭐</span>
+        <span>Valorado 4.9 · 2.300 familias</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STRIP ─────────────────────────────────── -->
+<div id="strip">
+  <div class="strip-inner">
+    <div class="strip-stat">
+      <div class="strip-num"><span>4.800</span>+</div>
+      <div class="strip-label">Familias registradas</div>
+    </div>
+    <div class="strip-div"></div>
+    <div class="strip-stat">
+      <div class="strip-num"><span>21.000</span></div>
+      <div class="strip-label">Libros disponibles</div>
+    </div>
+    <div class="strip-div"></div>
+    <div class="strip-stat">
+      <div class="strip-num"><span>€280</span></div>
+      <div class="strip-label">Ahorro medio por familia</div>
+    </div>
+    <div class="strip-div"></div>
+    <div class="strip-stat">
+      <div class="strip-num"><span>120</span>+</div>
+      <div class="strip-label">Colegios colaboradores</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CÓMO FUNCIONA ─────────────────────────── -->
+<section id="como">
+  <div class="wrap">
+    <div class="como-head sr">
+      <div class="eyebrow green"><span class="dot"></span>El proceso</div>
+      <h2 class="headline" style="margin-top:14px;">Tan fácil como <em>tres pasos</em></h2>
+      <p class="subline">No hace falta ser tecnológico. Si sabes hacer una foto con el móvil, puedes publicar tu primer libro en dos minutos.</p>
+    </div>
+    <div class="steps">
+      <div class="step sr sr-d1">
+        <div class="step-bubble">
+          <span class="step-num">Paso 1</span>
+          <span class="step-emoji">📸</span>
+        </div>
+        <h3>Publica tus libros</h3>
+        <p>Fotografía la portada, pon el precio que quieras y selecciona tu colegio. Listo en 2 minutos.</p>
+      </div>
+      <div class="step sr sr-d2">
+        <div class="step-bubble">
+          <span class="step-num">Paso 2</span>
+          <span class="step-emoji">🔔</span>
+        </div>
+        <h3>Encuentra o reserva</h3>
+        <p>Busca los libros de tu lista escolar. Recibe una alerta cuando alguien publique el que necesitas.</p>
+      </div>
+      <div class="step sr sr-d3">
+        <div class="step-bubble">
+          <span class="step-num">Paso 3</span>
+          <span class="step-emoji">🤝</span>
+        </div>
+        <h3>Queda y ahorra</h3>
+        <p>Recoge cerca del cole, paga de forma segura, y en junio devuelve. El ciclo continúa el año siguiente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BENEFICIOS PADRES ─────────────────────── -->
+<section id="padres">
+  <div class="wrap">
+    <div class="sr">
+      <div class="eyebrow"><span class="dot"></span>Para familias</div>
+      <h2 class="headline" style="margin-top:14px;">Septiembre <em>sin sustos</em> en el bolsillo</h2>
+      <p class="subline">Los libros escolares cuestan de media 400 € por niño. Con RentaLectura eso cambia.</p>
+    </div>
+    <div class="benefits-grid sr">
+      <div class="ben-card">
+        <span class="ben-icon">💸</span>
+        <h3>Hasta el 70% más barato</h3>
+        <p>Paga solo por usar los libros durante un curso. Al terminar, los devuelves y recuperas tu depósito.</p>
+        <span class="ben-tag">Ahorro garantizado</span>
+      </div>
+      <div class="ben-card">
+        <span class="ben-icon">🏫</span>
+        <h3>Mismo colegio, misma edición</h3>
+        <p>Solo ves libros de las editoriales y ediciones que usa tu colegio. Cero riesgo de equivocarte de libro.</p>
+        <span class="ben-tag">Filtro automático</span>
+      </div>
+      <div class="ben-card">
+        <span class="ben-icon">🔐</span>
+        <h3>Pago seguro con depósito</h3>
+        <p>El dinero queda retenido hasta que confirmas que el libro ha llegado en perfecto estado. Sin riesgos.</p>
+        <span class="ben-tag">Protección total</span>
+      </div>
+      <div class="ben-card">
+        <span class="ben-icon">🌱</span>
+        <h3>Un gesto por el planeta</h3>
+        <p>Cada libro reutilizado evita la impresión de uno nuevo. Tu familia reduce su huella de carbono cada curso.</p>
+        <span class="ben-tag">+CO₂ evitado</span>
+      </div>
+    </div>
+    <div class="saving-callout sr">
+      <div class="sc-text">
+        <h3>¿Cuánto puedes ahorrar este curso?</h3>
+        <p>Con dos hijos en primaria, una familia ahorra de media más de 500 € al año usando RentaLectura en lugar de comprar libros nuevos.</p>
+      </div>
+      <div class="sc-number"><small>hasta</small> €500<small>/año</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BENEFICIOS COLEGIOS ───────────────────── -->
+<section id="colegios">
+  <div class="wrap">
+    <div class="sr">
+      <div class="eyebrow blue"><span class="dot"></span>Para colegios</div>
+      <h2 class="headline" style="margin-top:14px;">Un servicio de valor <em>sin coste</em> para tu centro</h2>
+      <p class="subline">Ofrece a tus familias una herramienta que facilita la reutilización de libros y refuerza el compromiso del centro con la sostenibilidad.</p>
+    </div>
+    <div class="colegios-layout">
+      <ul class="colegios-checklist sr">
+        <li>
+          <div class="cl-icon g">🏷️</div>
+          <div class="cl-text">
+            <h4>Marketplace privado con tu marca</h4>
+            <p>Un espacio exclusivo para las familias de tu colegio, personalizado con el nombre y logo del centro. Solo ven los libros de tus listas.</p>
+          </div>
+        </li>
+        <li>
+          <div class="cl-icon b">📋</div>
+          <div class="cl-text">
+            <h4>Importa tus listas escolares</h4>
+            <p>Sube las listas de libros en formato Excel o PDF y las publicamos automáticamente. Cada curso, las actualizas en un clic.</p>
+          </div>
+        </li>
+        <li>
+          <div class="cl-icon a">📊</div>
+          <div class="cl-text">
+            <h4>Panel de analítica en tiempo real</h4>
+            <p>Visualiza cuántos libros se están reutilizando, el ahorro total de las familias y la reducción de huella de carbono del centro.</p>
+          </div>
+        </li>
+        <li>
+          <div class="cl-icon p">🆓</div>
+          <div class="cl-text">
+            <h4>Gratuito para el centro educativo</h4>
+            <p>El colegio no paga nada. RentaLectura cobra únicamente una pequeña comisión sobre cada transacción entre familias.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="dashboard-card sr sr-d2">
+        <div class="dash-header">
+          <div class="dh-dots"><span></span><span></span><span></span></div>
+          <div class="dh-title">Panel del colegio · CEIP Rosalía de Castro</div>
+        </div>
+        <div class="dash-body">
+          <div class="dash-metric-row">
+            <div class="dash-metric">
+              <div class="dm-label">Libros activos</div>
+              <div class="dm-val">412</div>
+            </div>
+            <div class="dash-metric">
+              <div class="dm-label">Familias</div>
+              <div class="dm-val">318</div>
+            </div>
+          </div>
+          <div class="dash-metric-row">
+            <div class="dash-metric">
+              <div class="dm-label">Ahorro comunidad</div>
+              <div class="dm-val green">€48.200</div>
+            </div>
+            <div class="dash-metric">
+              <div class="dm-label">CO₂ evitado</div>
+              <div class="dm-val green">1,4 t</div>
+            </div>
+          </div>
+          <div class="dash-list-title">Libros más solicitados ahora</div>
+          <div class="dash-book-row">
+            <div class="dbr-name">Lengua 5.º Santillana</div>
+            <div class="dbr-badge ok">3 disponibles</div>
+          </div>
+          <div class="dash-book-row">
+            <div class="dbr-name">Matemáticas 6.º SM</div>
+            <div class="dbr-badge wait">1 en espera</div>
+          </div>
+          <div class="dash-book-row">
+            <div class="dbr-name">Inglés 5.º Oxford</div>
+            <div class="dbr-badge ok">5 disponibles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ───────────────────────────────────── -->
+<section id="faq">
+  <div class="wrap">
+    <div class="faq-layout">
+      <div class="faq-sticky sr">
+        <div class="eyebrow green"><span class="dot"></span>FAQ</div>
+        <h2 style="margin-top:14px;">Tus dudas, resueltas</h2>
+        <p>Si tienes alguna pregunta que no está aquí, escríbenos y te contestamos en menos de 24 horas.</p>
+        <a class="contact-link" href="mailto:hola@rentalectura.es">
+          Contactar
+          <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="#2d7a52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="faq-list sr sr-d1">
+
+        <div class="faq-item">
+          <div class="faq-q">¿Cómo sé que el libro está en el estado que dicen?
+            <div class="faq-arrow">
+              <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke="#1a4731" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="faq-a">El vendedor sube fotos reales del libro al publicarlo. Además, el pago queda retenido en depósito hasta que el comprador confirma que ha recibido el libro en el estado descrito. Si no coincide, gestionamos la devolución.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Qué pasa si el libro se estropea durante el curso?
+            <div class="faq-arrow">
+              <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke="#1a4731" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="faq-a">El acuerdo de alquiler incluye una política de desgaste normal aceptado (subrayados ligeros, marcas de uso). El daño grave puede conllevar una compensación pactada de antemano. Ambas partes deben estar de acuerdo con las condiciones antes de cerrar el trato.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Cuánto cobra RentaLectura?
+            <div class="faq-arrow">
+              <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke="#1a4731" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="faq-a">Para las familias, cobramos un 8% de comisión sobre el precio del alquiler para cubrir la pasarela de pago seguro y el soporte. Para los colegios, la plataforma es completamente gratuita.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Puedo alquilar libros si aún no está mi colegio?
+            <div class="faq-arrow">
+              <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke="#1a4731" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="faq-a">¡Sí! Apúntate a la lista de espera e indica tu colegio. Si hay suficiente demanda en tu centro, lo activamos en cuestión de días. Si eres del equipo directivo, podéis solicitar la activación directa de forma prioritaria.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Los libros de texto digitales también están disponibles?
+            <div class="faq-arrow">
+              <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke="#1a4731" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="faq-a">En esta primera fase, la plataforma está orientada a libros físicos. Estamos explorando opciones para la gestión de licencias digitales conjuntamente con las editoriales. Apúntate a la lista para recibir novedades.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">¿Es seguro dar mis datos personales?
+            <div class="faq-arrow">
+              <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 1v10M1 6h10" stroke="#1a4731" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="faq-a">RentaLectura cumple con el RGPD. Nunca compartimos tus datos personales con terceros. Los pagos se procesan a través de Stripe, que cuenta con certificación PCI-DSS nivel 1, la más alta del sector.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WAITLIST ───────────────────────────────── -->
+<section id="waitlist">
+  <div class="wrap">
+    <div class="waitlist-layout">
+      <div class="sr">
+        <div class="eyebrow"><span class="dot"></span>Lista de espera</div>
+        <h2 class="headline" style="margin-top:14px;">El próximo septiembre, <em>ahorra de verdad</em></h2>
+        <p class="subline">Únete a más de 4.800 familias que ya están en la lista. Serás de los primeros en acceder cuando lancemos en tu zona.</p>
+        <div class="trust-row">
+          <div class="tr-pill">
+            <svg width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.7 3.5L13 5.3l-3 2.9.7 4.1L7 10.4l-3.7 1.9.7-4.1L1 5.3l4.3-.8L7 1z" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linejoin="round"/></svg>
+            Registro gratuito
+          </div>
+          <div class="tr-pill">
+            <svg width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 1a6 6 0 100 12A6 6 0 007 1zm0 3v4l2.5 2.5" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Sin compromiso
+          </div>
+          <div class="tr-pill">
+            <svg width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 4a4 4 0 01-4 7 4 4 0 01-4-4 4 4 0 014-4" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linecap="round"/><path d="M11 1l.5 2.5L14 4" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            RGPD cumplido
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card sr sr-d2">
+        <div class="form-tabs">
+          <button class="tab-btn active" data-tab="familia">👨‍👩‍👧 Soy familia</button>
+          <button class="tab-btn" data-tab="colegio">🏫 Soy colegio</button>
+        </div>
+
+        <div id="form-familia">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" placeholder="Tu nombre"/>
+            </div>
+            <div class="form-group">
+              <label for="apellido">Apellido</label>
+              <input type="text" id="apellido" placeholder="Tus apellidos"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email-f">Correo electrónico</label>
+            <input type="email" id="email-f" placeholder="tu@email.com"/>
+          </div>
+          <div class="form-group">
+            <label for="colegio-f">Nombre del colegio</label>
+            <input type="text" id="colegio-f" placeholder="CEIP / IES / Colegio..."/>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ciudad">Ciudad</label>
+              <input type="text" id="ciudad" placeholder="Madrid"/>
+            </div>
+            <div class="form-group">
+              <label for="curso">Curso escolar</label>
+              <select id="curso">
+                <option value="">Selecciona...</option>
+                <option>1.º Primaria</option>
+                <option>2.º Primaria</option>
+                <option>3.º Primaria</option>
+                <option>4.º Primaria</option>
+                <option>5.º Primaria</option>
+                <option>6.º Primaria</option>
+                <option>1.º ESO</option>
+                <option>2.º ESO</option>
+                <option>3.º ESO</option>
+                <option>4.º ESO</option>
+                <option>Varios cursos</option>
+              </select>
+            </div>
+          </div>
+          <button class="form-submit" onclick="handleSubmit('familia')">
+            Apuntarme a la lista de espera
+            <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9h12M10 5l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="form-note">Al registrarte aceptas nuestra <a href="#" style="color:var(--emerald)">política de privacidad</a>. No spam, nunca.</p>
+        </div>
+
+        <div id="form-colegio" style="display:none;">
+          <div class="form-group">
+            <label for="nombre-centro">Nombre del centro</label>
+            <input type="text" id="nombre-centro" placeholder="CEIP / IES / Colegio..."/>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contacto">Nombre del contacto</label>
+              <input type="text" id="contacto" placeholder="Tu nombre"/>
+            </div>
+            <div class="form-group">
+              <label for="cargo">Cargo</label>
+              <select id="cargo">
+                <option value="">Selecciona...</option>
+                <option>Director/a</option>
+                <option>Jefe/a de estudios</option>
+                <option>Secretario/a</option>
+                <option>AMPA / APA</option>
+                <option>Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email-c">Correo del centro</label>
+            <input type="email" id="email-c" placeholder="direccion@colegio.es"/>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ciudad-c">Ciudad</label>
+              <input type="text" id="ciudad-c" placeholder="Madrid"/>
+            </div>
+            <div class="form-group">
+              <label for="alumnos">N.º de alumnos</label>
+              <select id="alumnos">
+                <option value="">Selecciona...</option>
+                <option>Menos de 200</option>
+                <option>200 – 500</option>
+                <option>500 – 1000</option>
+                <option>Más de 1000</option>
+              </select>
+            </div>
+          </div>
+          <button class="form-submit" onclick="handleSubmit('colegio')">
+            Solicitar activación prioritaria
+            <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9h12M10 5l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="form-note">Un especialista de RentaLectura se pondrá en contacto contigo en 48 horas.</p>
+        </div>
+
+        <div class="form-success" id="form-success">
+          <div class="success-icon">🎉</div>
+          <h3>¡Ya estás en la lista!</h3>
+          <p>Te avisaremos en cuanto RentaLectura esté disponible en tu colegio. Mientras tanto, cuéntaselo a otras familias del cole.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────── -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">Renta<b>Lectura</b></div>
+    <ul class="footer-links">
+      <li><a href="#">Política de privacidad</a></li>
+      <li><a href="#">Términos de uso</a></li>
+      <li><a href="#">Contacto</a></li>
+      <li><a href="#">Blog</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 RentaLectura · Todos los derechos reservados</div>
+  </div>
+</footer>
+
+<script>
+// ── Nav scroll effect ──────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Scroll reveal ──────────────────────────────
+const srEls = document.querySelectorAll('.sr');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+srEls.forEach(el => observer.observe(el));
+
+// ── FAQ accordion ──────────────────────────────
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ── Form tabs ──────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.getElementById('form-familia').style.display = tab === 'familia' ? 'block' : 'none';
+    document.getElementById('form-colegio').style.display = tab === 'colegio'  ? 'block' : 'none';
+  });
+});
+
+// ── Form submit ────────────────────────────────
+function handleSubmit(type) {
+  const emailId = type === 'familia' ? 'email-f' : 'email-c';
+  const email = document.getElementById(emailId).value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById(emailId).focus();
+    document.getElementById(emailId).style.borderColor = '#e53e3e';
+    setTimeout(() => document.getElementById(emailId).style.borderColor = '', 2000);
+    return;
+  }
+  // Show success
+  document.getElementById('form-familia').style.display = 'none';
+  document.getElementById('form-colegio').style.display = 'none';
+  document.querySelectorAll('.tab-btn, .form-tabs').forEach(el => el.style.display = 'none');
+  const success = document.getElementById('form-success');
+  success.style.display = 'block';
+  // Confetti burst (CSS-only, subtle)
+  success.classList.add('visible');
+}
+</script>
+</body>
+</html>
