@@ -9,9 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
-/* ═══════════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════════ */
 :root {
   --forest:    #1a4731;
   --emerald:   #2d7a52;
@@ -43,9 +40,6 @@
   --max: 1160px;
 }
 
-/* ═══════════════════════════════════════════
-   RESET + BASE
-═══════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;font-size:16px;}
 body{
@@ -60,9 +54,6 @@ img{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
 button,input,select,textarea{font-family:inherit;}
 
-/* ═══════════════════════════════════════════
-   UTILITIES
-═══════════════════════════════════════════ */
 .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
 .eyebrow{
   display:inline-flex;align-items:center;gap:8px;
@@ -89,7 +80,6 @@ h2.headline em{font-style:italic;color:var(--emerald);}
   max-width:580px;margin-top:16px;
 }
 
-/* scroll reveal */
 .sr{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease;}
 .sr.in{opacity:1;transform:none;}
 .sr-d1{transition-delay:.1s;}
@@ -97,9 +87,6 @@ h2.headline em{font-style:italic;color:var(--emerald);}
 .sr-d3{transition-delay:.3s;}
 .sr-d4{transition-delay:.4s;}
 
-/* ═══════════════════════════════════════════
-   NAV
-═══════════════════════════════════════════ */
 #nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
   padding:0 24px;height:64px;
@@ -135,13 +122,33 @@ h2.headline em{font-style:italic;color:var(--emerald);}
   white-space:nowrap;
 }
 .nav-btn:hover{background:var(--emerald);transform:translateY(-1px);}
-
 .nav-mob{display:none;background:none;border:none;cursor:pointer;padding:4px;}
 .nav-mob svg{display:block;}
 
-/* ═══════════════════════════════════════════
-   HERO
-═══════════════════════════════════════════ */
+.nav-auth{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.nav-btn-secondary{
+  background:transparent;
+  color:var(--forest);
+  border:1px solid var(--border);
+}
+.nav-btn-secondary:hover{
+  background:var(--sand);
+}
+.user-menu{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.user-greeting{
+  font-size:.88rem;
+  color:var(--slate);
+  font-weight:600;
+}
+
 #hero{
   min-height:100svh;
   padding:100px 24px 72px;
@@ -149,8 +156,6 @@ h2.headline em{font-style:italic;color:var(--emerald);}
   background:var(--sand);
   position:relative;overflow:hidden;
 }
-
-/* organic blob bg */
 .hero-blob{
   position:absolute;pointer-events:none;
   border-radius:50%;filter:blur(72px);opacity:.45;
@@ -165,7 +170,6 @@ h2.headline em{font-style:italic;color:var(--emerald);}
   gap:64px;align-items:center;
 }
 
-/* hero text */
 .hero-kicker{
   display:inline-flex;align-items:center;gap:10px;
   background:var(--sage);color:var(--emerald);
@@ -254,7 +258,6 @@ h1 em::after{
   font-size:.6rem;font-weight:700;flex-shrink:0;
 }
 
-/* hero visual – mock phone card */
 .hero-visual{
   animation:slideLeft .7s .2s ease both;
   display:flex;justify-content:center;align-items:center;
@@ -314,7 +317,6 @@ h1 em::after{
   font-size:.72rem;font-weight:700;cursor:pointer;
 }
 
-/* floating accents */
 .float-tag{
   position:absolute;background:var(--white);
   border-radius:var(--r-md);
@@ -328,9 +330,6 @@ h1 em::after{
 .ft2{bottom:-14px;left:-24px;animation-delay:2s;}
 .ft-icon{font-size:1rem;}
 
-/* ═══════════════════════════════════════════
-   SOCIAL PROOF STRIP
-═══════════════════════════════════════════ */
 #strip{
   background:var(--navy);
   padding:20px 24px;
@@ -352,9 +351,6 @@ h1 em::after{
 .strip-label{font-size:.75rem;opacity:.55;font-weight:400;margin-top:1px;}
 .strip-div{width:1px;height:36px;background:rgba(255,255,255,.12);}
 
-/* ═══════════════════════════════════════════
-   CÓMO FUNCIONA
-═══════════════════════════════════════════ */
 #como{
   padding:100px 24px;
   background:var(--white);
@@ -369,7 +365,6 @@ h1 em::after{
   position:relative;
   max-width:860px;margin:0 auto;
 }
-/* connector line */
 .steps::before{
   content:'';
   position:absolute;
@@ -409,9 +404,6 @@ h1 em::after{
 }
 .step p{font-size:.9rem;color:var(--slate);line-height:1.65;}
 
-/* ═══════════════════════════════════════════
-   BENEFICIOS PADRES
-═══════════════════════════════════════════ */
 #padres{
   padding:100px 24px;
   background:var(--forest);
@@ -460,7 +452,6 @@ h1 em::after{
   padding:3px 12px;font-size:.72rem;font-weight:700;
 }
 
-/* big saving callout */
 .saving-callout{
   margin-top:48px;
   background:rgba(255,255,255,.08);
@@ -483,9 +474,6 @@ h1 em::after{
 }
 .sc-number small{font-size:1.4rem;vertical-align:top;margin-top:10px;display:inline-block;}
 
-/* ═══════════════════════════════════════════
-   BENEFICIOS COLEGIOS
-═══════════════════════════════════════════ */
 #colegios{
   padding:100px 24px;
   background:var(--sand);
@@ -514,7 +502,6 @@ h1 em::after{
 .cl-text h4{font-weight:700;color:var(--navy);margin-bottom:4px;font-size:.97rem;}
 .cl-text p{font-size:.88rem;color:var(--slate);line-height:1.65;}
 
-/* dashboard preview */
 .dashboard-card{
   background:var(--white);
   border-radius:var(--r-lg);
@@ -569,9 +556,6 @@ h1 em::after{
 .dbr-badge.ok {background:var(--sage);color:var(--emerald);}
 .dbr-badge.wait{background:var(--azure);color:var(--sky);}
 
-/* ═══════════════════════════════════════════
-   FAQ
-═══════════════════════════════════════════ */
 #faq{
   padding:100px 24px;
   background:var(--white);
@@ -620,9 +604,6 @@ h1 em::after{
 }
 .faq-item.open .faq-a{max-height:400px;padding:0 22px 22px;}
 
-/* ═══════════════════════════════════════════
-   LISTA DE ESPERA
-═══════════════════════════════════════════ */
 #waitlist{
   padding:100px 24px;
   background:linear-gradient(160deg,var(--navy) 0%,#0a3d2b 100%);
@@ -658,7 +639,6 @@ h1 em::after{
 }
 .tr-pill svg{flex-shrink:0;}
 
-/* form card */
 .form-card{
   background:var(--white);
   border-radius:var(--r-xl);
@@ -722,7 +702,6 @@ h1 em::after{
   margin-top:14px;line-height:1.5;
 }
 
-/* success state */
 .form-success{
   display:none;text-align:center;padding:20px 0;
 }
@@ -737,9 +716,6 @@ h1 em::after{
 }
 .form-success p{font-size:.9rem;color:var(--slate);}
 
-/* ═══════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════ */
 #footer{
   background:var(--ink);
   padding:48px 24px;
@@ -764,9 +740,80 @@ h1 em::after{
 .footer-links a:hover{color:rgba(255,255,255,.8);}
 .footer-copy{font-size:.78rem;color:rgba(255,255,255,.25);}
 
-/* ═══════════════════════════════════════════
-   KEYFRAMES
-═══════════════════════════════════════════ */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:999;
+}
+.modal.show{display:flex;}
+.modal-card{
+  width:100%;
+  max-width:460px;
+  background:var(--white);
+  border-radius:var(--r-xl);
+  box-shadow:var(--sh-lift);
+  padding:32px 28px;
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:36px;
+  height:36px;
+  border:none;
+  border-radius:50%;
+  background:var(--sand);
+  cursor:pointer;
+  font-size:1.2rem;
+}
+.modal-title{
+  font-family:var(--font-display);
+  font-size:1.8rem;
+  color:var(--navy);
+  margin-bottom:8px;
+}
+.modal-sub{
+  color:var(--slate);
+  font-size:.95rem;
+  margin-bottom:24px;
+}
+.auth-error,.auth-success{
+  display:none;
+  margin-bottom:14px;
+  padding:12px 14px;
+  border-radius:var(--r-md);
+  font-size:.9rem;
+}
+.auth-error{
+  background:#fef2f2;
+  color:#b91c1c;
+  border:1px solid #fecaca;
+}
+.auth-success{
+  background:#ecfdf5;
+  color:#166534;
+  border:1px solid #bbf7d0;
+}
+.auth-switch{
+  margin-top:16px;
+  text-align:center;
+  font-size:.88rem;
+  color:var(--slate);
+}
+.auth-switch button{
+  background:none;
+  border:none;
+  color:var(--emerald);
+  font-weight:700;
+  cursor:pointer;
+}
+
 @keyframes slideDown{
   from{opacity:0;transform:translateY(-20px);}
   to  {opacity:1;transform:translateY(0);}
@@ -780,9 +827,6 @@ h1 em::after{
   50%    {transform:translateY(-12px);}
 }
 
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════ */
 @media(max-width:980px){
   .hero-inner{grid-template-columns:1fr;gap:48px;}
   .hero-visual{order:-1;}
@@ -797,6 +841,7 @@ h1 em::after{
   .form-row{grid-template-columns:1fr;}
   .nav-links{display:none;}
   .nav-mob{display:block;}
+  .nav-auth{display:none;}
 }
 @media(max-width:600px){
   section,#como,#padres,#colegios,#faq,#waitlist{padding:72px 20px;}
@@ -811,7 +856,6 @@ h1 em::after{
 </head>
 <body>
 
-<!-- ─── NAV ─────────────────────────────────── -->
 <nav id="nav">
   <div class="nav-brand">Renta<b>Lectura</b></div>
   <ul class="nav-links">
@@ -820,7 +864,16 @@ h1 em::after{
     <li><a href="#colegios">Para colegios</a></li>
     <li><a href="#faq">Preguntas</a></li>
   </ul>
-  <a class="nav-btn" href="#waitlist">Únete gratis</a>
+
+  <div class="nav-auth">
+    <button class="nav-btn nav-btn-secondary" id="openLoginBtn" type="button">Entrar</button>
+    <button class="nav-btn" id="openRegisterBtn" type="button">Registrarme</button>
+    <div class="user-menu" id="userMenu" style="display:none;">
+      <span id="userGreeting" class="user-greeting"></span>
+      <button class="nav-btn" id="logoutBtn" type="button">Salir</button>
+    </div>
+  </div>
+
   <button class="nav-mob" aria-label="Menú">
     <svg width="22" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect y="0" width="22" height="2" rx="1" fill="#111827"/>
@@ -830,7 +883,6 @@ h1 em::after{
   </button>
 </nav>
 
-<!-- ─── HERO ─────────────────────────────────── -->
 <section id="hero">
   <div class="hero-blob blob1"></div>
   <div class="hero-blob blob2"></div>
@@ -902,7 +954,7 @@ h1 em::after{
         </div>
         <div class="phone-footer">
           <span>4 libros disponibles cerca</span>
-          <button class="pf-btn">Ver todos</button>
+          <button class="pf-btn" type="button">Ver todos</button>
         </div>
       </div>
       <div class="float-tag ft1">
@@ -917,7 +969,6 @@ h1 em::after{
   </div>
 </section>
 
-<!-- ─── STRIP ─────────────────────────────────── -->
 <div id="strip">
   <div class="strip-inner">
     <div class="strip-stat">
@@ -942,7 +993,6 @@ h1 em::after{
   </div>
 </div>
 
-<!-- ─── CÓMO FUNCIONA ─────────────────────────── -->
 <section id="como">
   <div class="wrap">
     <div class="como-head sr">
@@ -979,7 +1029,6 @@ h1 em::after{
   </div>
 </section>
 
-<!-- ─── BENEFICIOS PADRES ─────────────────────── -->
 <section id="padres">
   <div class="wrap">
     <div class="sr">
@@ -1023,7 +1072,6 @@ h1 em::after{
   </div>
 </section>
 
-<!-- ─── BENEFICIOS COLEGIOS ───────────────────── -->
 <section id="colegios">
   <div class="wrap">
     <div class="sr">
@@ -1108,7 +1156,6 @@ h1 em::after{
   </div>
 </section>
 
-<!-- ─── FAQ ───────────────────────────────────── -->
 <section id="faq">
   <div class="wrap">
     <div class="faq-layout">
@@ -1123,7 +1170,6 @@ h1 em::after{
       </div>
 
       <div class="faq-list sr sr-d1">
-
         <div class="faq-item">
           <div class="faq-q">¿Cómo sé que el libro está en el estado que dicen?
             <div class="faq-arrow">
@@ -1177,13 +1223,11 @@ h1 em::after{
           </div>
           <div class="faq-a">RentaLectura cumple con el RGPD. Nunca compartimos tus datos personales con terceros. Los pagos se procesan a través de Stripe, que cuenta con certificación PCI-DSS nivel 1, la más alta del sector.</div>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── WAITLIST ───────────────────────────────── -->
 <section id="waitlist">
   <div class="wrap">
     <div class="waitlist-layout">
@@ -1209,8 +1253,8 @@ h1 em::after{
 
       <div class="form-card sr sr-d2">
         <div class="form-tabs">
-          <button class="tab-btn active" data-tab="familia">👨‍👩‍👧 Soy familia</button>
-          <button class="tab-btn" data-tab="colegio">🏫 Soy colegio</button>
+          <button class="tab-btn active" data-tab="familia" type="button">👨‍👩‍👧 Soy familia</button>
+          <button class="tab-btn" data-tab="colegio" type="button">🏫 Soy colegio</button>
         </div>
 
         <div id="form-familia">
@@ -1255,7 +1299,7 @@ h1 em::after{
               </select>
             </div>
           </div>
-          <button class="form-submit" onclick="handleSubmit('familia')">
+          <button class="form-submit" onclick="handleSubmit('familia')" type="button">
             Apuntarme a la lista de espera
             <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9h12M10 5l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -1304,7 +1348,7 @@ h1 em::after{
               </select>
             </div>
           </div>
-          <button class="form-submit" onclick="handleSubmit('colegio')">
+          <button class="form-submit" onclick="handleSubmit('colegio')" type="button">
             Solicitar activación prioritaria
             <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9h12M10 5l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -1321,7 +1365,6 @@ h1 em::after{
   </div>
 </section>
 
-<!-- ─── FOOTER ─────────────────────────────────── -->
 <footer id="footer">
   <div class="footer-inner">
     <div class="footer-brand">Renta<b>Lectura</b></div>
@@ -1335,14 +1378,102 @@ h1 em::after{
   </div>
 </footer>
 
-<script>
-// ── Nav scroll effect ──────────────────────────
+<div class="modal" id="authModal">
+  <div class="modal-card">
+    <button class="modal-close" id="closeAuthModal" type="button">×</button>
+
+    <div id="loginView">
+      <h3 class="modal-title">Entrar</h3>
+      <p class="modal-sub">Accede a tu cuenta para gestionar tus libros y reservas.</p>
+
+      <div class="auth-error" id="loginError"></div>
+      <div class="auth-success" id="loginSuccess"></div>
+
+      <div class="form-group">
+        <label for="loginEmail">Correo electrónico</label>
+        <input type="email" id="loginEmail" placeholder="tu@email.com"/>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Contraseña</label>
+        <input type="password" id="loginPassword" placeholder="********"/>
+      </div>
+      <button class="form-submit" id="loginBtn" type="button">Entrar</button>
+
+      <div class="auth-switch">
+        ¿No tienes cuenta?
+        <button type="button" id="goRegisterBtn">Crear cuenta</button>
+      </div>
+    </div>
+
+    <div id="registerView" style="display:none;">
+      <h3 class="modal-title">Crear cuenta</h3>
+      <p class="modal-sub">Regístrate gratis para empezar a usar RentaLectura.</p>
+
+      <div class="auth-error" id="registerError"></div>
+      <div class="auth-success" id="registerSuccess"></div>
+
+      <div class="form-group">
+        <label for="registerName">Nombre</label>
+        <input type="text" id="registerName" placeholder="Tu nombre"/>
+      </div>
+      <div class="form-group">
+        <label for="registerEmail">Correo electrónico</label>
+        <input type="email" id="registerEmail" placeholder="tu@email.com"/>
+      </div>
+      <div class="form-group">
+        <label for="registerPassword">Contraseña</label>
+        <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres"/>
+      </div>
+      <button class="form-submit" id="registerBtn" type="button">Crear cuenta</button>
+
+      <div class="auth-switch">
+        ¿Ya tienes cuenta?
+        <button type="button" id="goLoginBtn">Entrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+// PEGA AQUÍ TU CONFIG DE FIREBASE
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKUMU-1QP-mYu_78VMSL3wZNJC3l1qp3s",
+    authDomain: "rentalectura-36d69.firebaseapp.com",
+    projectId: "rentalectura-36d69",
+    storageBucket: "rentalectura-36d69.firebasestorage.app",
+    messagingSenderId: "471407251117",
+    appId: "1:471407251117:web:17666d2aa46bb86b4d0024",
+    measurementId: "G-QFL474LEPH"
+  };
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Nav scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-// ── Scroll reveal ──────────────────────────────
+// Scroll reveal
 const srEls = document.querySelectorAll('.sr');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -1354,7 +1485,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 srEls.forEach(el => observer.observe(el));
 
-// ── FAQ accordion ──────────────────────────────
+// FAQ
 document.querySelectorAll('.faq-q').forEach(q => {
   q.addEventListener('click', () => {
     const item = q.parentElement;
@@ -1364,35 +1495,206 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// ── Form tabs ──────────────────────────────────
+// Waitlist tabs
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const tab = btn.dataset.tab;
     document.getElementById('form-familia').style.display = tab === 'familia' ? 'block' : 'none';
-    document.getElementById('form-colegio').style.display = tab === 'colegio'  ? 'block' : 'none';
+    document.getElementById('form-colegio').style.display = tab === 'colegio' ? 'block' : 'none';
+    document.getElementById('form-success').style.display = 'none';
   });
 });
 
-// ── Form submit ────────────────────────────────
-function handleSubmit(type) {
-  const emailId = type === 'familia' ? 'email-f' : 'email-c';
-  const email = document.getElementById(emailId).value.trim();
-  if (!email || !email.includes('@')) {
-    document.getElementById(emailId).focus();
-    document.getElementById(emailId).style.borderColor = '#e53e3e';
-    setTimeout(() => document.getElementById(emailId).style.borderColor = '', 2000);
+// Auth modal
+const authModal = document.getElementById('authModal');
+const openLoginBtn = document.getElementById('openLoginBtn');
+const openRegisterBtn = document.getElementById('openRegisterBtn');
+const closeAuthModal = document.getElementById('closeAuthModal');
+const loginView = document.getElementById('loginView');
+const registerView = document.getElementById('registerView');
+const goRegisterBtn = document.getElementById('goRegisterBtn');
+const goLoginBtn = document.getElementById('goLoginBtn');
+
+function openModal(mode = 'login') {
+  authModal.classList.add('show');
+  showAuthView(mode);
+}
+function closeModal() {
+  authModal.classList.remove('show');
+  clearMessages();
+}
+function showAuthView(mode) {
+  loginView.style.display = mode === 'login' ? 'block' : 'none';
+  registerView.style.display = mode === 'register' ? 'block' : 'none';
+  clearMessages();
+}
+function clearMessages() {
+  ['loginError','loginSuccess','registerError','registerSuccess'].forEach(id => {
+    const el = document.getElementById(id);
+    el.style.display = 'none';
+    el.textContent = '';
+  });
+}
+function showMsg(id, text) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.style.display = 'block';
+}
+
+openLoginBtn?.addEventListener('click', () => openModal('login'));
+openRegisterBtn?.addEventListener('click', () => openModal('register'));
+closeAuthModal?.addEventListener('click', closeModal);
+authModal?.addEventListener('click', e => {
+  if (e.target === authModal) closeModal();
+});
+goRegisterBtn?.addEventListener('click', () => showAuthView('register'));
+goLoginBtn?.addEventListener('click', () => showAuthView('login'));
+
+// Registro
+document.getElementById('registerBtn')?.addEventListener('click', async () => {
+  clearMessages();
+
+  const name = document.getElementById('registerName').value.trim();
+  const email = document.getElementById('registerEmail').value.trim();
+  const password = document.getElementById('registerPassword').value;
+
+  if (!name || !email || password.length < 6) {
+    showMsg('registerError', 'Completa todos los campos y usa una contraseña de al menos 6 caracteres.');
     return;
   }
-  // Show success
-  document.getElementById('form-familia').style.display = 'none';
-  document.getElementById('form-colegio').style.display = 'none';
-  document.querySelectorAll('.tab-btn, .form-tabs').forEach(el => el.style.display = 'none');
-  const success = document.getElementById('form-success');
-  success.style.display = 'block';
-  // Confetti burst (CSS-only, subtle)
-  success.classList.add('visible');
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      name,
+      email,
+      createdAt: serverTimestamp()
+    });
+
+    showMsg('registerSuccess', 'Cuenta creada correctamente.');
+    setTimeout(() => closeModal(), 900);
+  } catch (error) {
+    showMsg('registerError', getFirebaseError(error));
+  }
+});
+
+// Login
+document.getElementById('loginBtn')?.addEventListener('click', async () => {
+  clearMessages();
+
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  if (!email || !password) {
+    showMsg('loginError', 'Introduce tu correo y tu contraseña.');
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    showMsg('loginSuccess', 'Has iniciado sesión.');
+    setTimeout(() => closeModal(), 700);
+  } catch (error) {
+    showMsg('loginError', getFirebaseError(error));
+  }
+});
+
+// Logout + estado
+const userMenu = document.getElementById('userMenu');
+const userGreeting = document.getElementById('userGreeting');
+const logoutBtn = document.getElementById('logoutBtn');
+
+logoutBtn?.addEventListener('click', async () => {
+  await signOut(auth);
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    if (openLoginBtn) openLoginBtn.style.display = 'none';
+    if (openRegisterBtn) openRegisterBtn.style.display = 'none';
+    if (userMenu) userMenu.style.display = 'flex';
+    if (userGreeting) userGreeting.textContent = user.email;
+  } else {
+    if (openLoginBtn) openLoginBtn.style.display = 'inline-flex';
+    if (openRegisterBtn) openRegisterBtn.style.display = 'inline-flex';
+    if (userMenu) userMenu.style.display = 'none';
+    if (userGreeting) userGreeting.textContent = '';
+  }
+});
+
+// Formulario waitlist real
+window.handleSubmit = async function(type) {
+  try {
+    if (type === 'familia') {
+      const payload = {
+        type: 'familia',
+        nombre: document.getElementById('nombre').value.trim(),
+        apellido: document.getElementById('apellido').value.trim(),
+        email: document.getElementById('email-f').value.trim(),
+        colegio: document.getElementById('colegio-f').value.trim(),
+        ciudad: document.getElementById('ciudad').value.trim(),
+        curso: document.getElementById('curso').value,
+        createdAt: serverTimestamp()
+      };
+
+      if (!payload.nombre || !payload.email || !payload.colegio) {
+        alert('Completa al menos nombre, email y colegio.');
+        return;
+      }
+
+      await addDoc(collection(db, 'waitlist'), payload);
+    }
+
+    if (type === 'colegio') {
+      const payload = {
+        type: 'colegio',
+        centro: document.getElementById('nombre-centro').value.trim(),
+        contacto: document.getElementById('contacto').value.trim(),
+        cargo: document.getElementById('cargo').value,
+        email: document.getElementById('email-c').value.trim(),
+        ciudad: document.getElementById('ciudad-c').value.trim(),
+        alumnos: document.getElementById('alumnos').value,
+        createdAt: serverTimestamp()
+      };
+
+      if (!payload.centro || !payload.contacto || !payload.email) {
+        alert('Completa al menos centro, contacto y email.');
+        return;
+      }
+
+      await addDoc(collection(db, 'waitlist'), payload);
+    }
+
+    document.getElementById('form-familia').style.display = 'none';
+    document.getElementById('form-colegio').style.display = 'none';
+    document.querySelector('.form-tabs').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+
+  } catch (error) {
+    console.error(error);
+    alert('Ha habido un error al enviar el formulario.');
+  }
+};
+
+function getFirebaseError(error) {
+  switch (error.code) {
+    case 'auth/email-already-in-use':
+      return 'Ese correo ya está registrado.';
+    case 'auth/invalid-email':
+      return 'El correo no es válido.';
+    case 'auth/weak-password':
+      return 'La contraseña es demasiado débil.';
+    case 'auth/invalid-credential':
+      return 'Correo o contraseña incorrectos.';
+    case 'auth/user-not-found':
+      return 'No existe una cuenta con ese correo.';
+    case 'auth/wrong-password':
+      return 'Contraseña incorrecta.';
+    default:
+      return 'Ha ocurrido un error. Inténtalo de nuevo.';
+  }
 }
 </script>
 </body>
